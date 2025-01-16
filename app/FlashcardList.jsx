@@ -1,12 +1,23 @@
+'use client'
+
 import Flashcard from "./Flashcard";
+import {useRef, useState} from "react";
 
-export default function FlashcardList({ flashcards }) {
-    const cards = []
-    flashcards.forEach(flashcard => {
-        cards.push(
-            <Flashcard flashcard={flashcard} key={flashcard.front} />
-        )
-    })
+export default function FlashcardList({flashcards}) {
+    const flashcardRefs = useRef([])
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-    return cards;
+
+
+    return (
+        <div>
+            {flashcards.map((flashcard, index) => (
+                <Flashcard
+                    flashcard={flashcard}
+                    key={flashcard.front}
+                    ref={(card) => (flashcardRefs.current[index] = card)}
+                />
+            ))}
+        </div>
+    );
 }

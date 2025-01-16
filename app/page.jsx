@@ -1,4 +1,4 @@
-import FlashcardList from "@/app/FlashcardList";
+import FlashcardList from "./FlashcardList";
 
 const FLASHCARDS = [
     {front: "2 + 2", back: "4", correct: false},

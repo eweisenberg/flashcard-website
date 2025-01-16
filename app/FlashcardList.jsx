@@ -1,13 +1,35 @@
 'use client'
 
 import Flashcard from "./Flashcard";
-import {useRef, useState} from "react";
+import {useRef, useState, useEffect} from "react";
 
 export default function FlashcardList({flashcards}) {
     const flashcardRefs = useRef([])
     const [currentIndex, setCurrentIndex] = useState(0);
 
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === "ArrowDown" && currentIndex < flashcards.length - 1) {
+                setCurrentIndex((prev) => prev + 1);
+            } else if (event.key === "ArrowUp" && currentIndex > 0) {
+                setCurrentIndex((prev) => prev - 1);
+            }
+        };
 
+        window.addEventListener("keydown", handleKeyDown);
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [currentIndex, flashcards.length]);
+
+    useEffect(() => {
+        if (flashcardRefs.current[currentIndex]) {
+            flashcardRefs.current[currentIndex].scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+            });
+        }
+    }, [currentIndex]);
 
     return (
         <div>

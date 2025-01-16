@@ -9,6 +9,9 @@ export default function FlashcardList({flashcards}) {
 
     useEffect(() => {
         const handleKeyDown = (event) => {
+            if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+                event.preventDefault();
+            }
             if (event.key === "ArrowDown" && currentIndex < flashcards.length - 1) {
                 setCurrentIndex((prev) => prev + 1);
             } else if (event.key === "ArrowUp" && currentIndex > 0) {
